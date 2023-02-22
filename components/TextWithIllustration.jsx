@@ -1,16 +1,18 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import Link from 'next/link'
+import { useNextSanityImage } from 'next-sanity-image'
+import { sanityClient } from '../sanity/lib/client'
 
-/* This example requires Tailwind CSS v3.0+ */
-export default function Section({
+export default function TextWithIllustration({
   heading,
   body,
-  linkText,
-  linkUrl,
-  imgsrc,
-  overline,
+  link,
+  image,
+  tagline,
   flipLayout = false,
 }) {
+  const imageProps = useNextSanityImage(sanityClient(), image)
   return (
     <div className="relative">
       <div
@@ -19,7 +21,15 @@ export default function Section({
           'relative h-80 overflow-hidden md:absolute md:h-full md:w-1/3 lg:w-1/2'
         )}
       >
-        <img className="h-full w-full object-cover" src={imgsrc} alt="" />
+        {/* <img className="h-full w-full object-cover" src={imgsrc} alt="" /> */}
+        <Image
+          alt="Seattle Skyline"
+          src={imageProps.src}
+          loader={imageProps.loader}
+          fill
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 100vw, 800px"
+        />
         <svg
           viewBox="0 0 926 676"
           aria-hidden="true"
@@ -55,7 +65,7 @@ export default function Section({
           )}
         >
           <p className="font-body text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-200">
-            {overline}
+            {tagline}
           </p>
           <h2 className="mt-2 font-heading text-5xl font-bold tracking-wider dark:text-indigo-100">
             {heading}
@@ -65,10 +75,10 @@ export default function Section({
           </p>
           <div className="mt-8">
             <Link
-              href={linkUrl}
+              href={link.href}
               className="inline-flex rounded-md bg-indigo-800/80 px-3.5 py-1.5 font-body text-base font-semibold leading-7 text-white shadow-sm transition-all hover:bg-indigo-800/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:bg-indigo-500/80 hover:dark:bg-indigo-600 hover:dark:shadow-lg"
             >
-              {linkText}
+              {link.linkText}
             </Link>
           </div>
         </div>

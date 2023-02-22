@@ -1,43 +1,37 @@
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  title: 'Text with Illustration',
-  name: 'textWithIllustration',
+  name: 'hero',
   type: 'object',
+  title: 'Hero Section',
   fields: [
     defineField({
-      title: 'Heading',
       name: 'heading',
       type: 'string',
+      title: 'Heading',
     }),
     defineField({
-      title: 'Tagline',
       name: 'tagline',
       type: 'string',
+      title: 'Tagline',
     }),
     defineField({
-      title: 'Body',
       name: 'body',
       type: 'text',
+      title: 'Body',
     }),
     defineField({
-      title: 'Flip Layout',
-      name: 'flipLayout',
-      type: 'boolean',
-      initialValue: false,
-    }),
-    defineField({
-      title: 'Image',
       name: 'image',
       type: 'image',
+      title: 'Image',
       options: {
         hotspot: true,
       },
       fields: [
         defineField({
-          title: 'Alternative Text',
           name: 'alt',
           type: 'string',
+          title: 'Alternative Text',
         }),
       ],
     }),

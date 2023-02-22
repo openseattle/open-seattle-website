@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import Layout from '../components/Layout'
 
 export default function SubmittedPage() {
   return (
-    <>
+    <Layout>
       <div className="flex min-h-full lg:relative">
         <div className="flex flex-grow flex-col">
           <main className="flex flex-grow flex-col">
@@ -39,6 +40,6 @@ export default function SubmittedPage() {
           />
         </div>
       </div>
-    </>
+    </Layout>
   )
 }

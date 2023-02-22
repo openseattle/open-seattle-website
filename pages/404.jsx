@@ -1,8 +1,9 @@
 import Link from 'next/link'
+import Layout from '../components/Layout'
 
 export default function Page404() {
   return (
-    <>
+    <Layout>
       <div className="flex min-h-full flex-col lg:relative">
         <div className="flex flex-grow flex-col">
           <main className="flex flex-grow flex-col">
@@ -38,6 +39,6 @@ export default function Page404() {
           />
         </div>
       </div>
-    </>
+    </Layout>
   )
 }

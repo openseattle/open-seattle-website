@@ -4,8 +4,6 @@ import { Lato, League_Gothic } from '@next/font/google'
 import { IBM_Plex_Mono, Inter, PT_Serif } from '@next/font/google'
 import { AppProps } from 'next/app'
 
-import Layout from '../components/Layout'
-
 const lato = Lato({
   variable: '--font-lato',
   display: 'swap',
@@ -41,9 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
     </>
   )
 }

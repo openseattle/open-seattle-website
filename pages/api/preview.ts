@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { previewSecretDocumentId, readToken } from '../../sanity/env'
-import { client } from '../../sanity/lib/client'
+import { sanityClient } from '../../sanity/lib/client'
 import { getPreviewSecret } from '../../sanity/lib/previewSecret'
 
 export default async function preview(
@@ -24,7 +24,7 @@ export default async function preview(
     return
   }
 
-  const authClient = client.withConfig({ useCdn: false, token: readToken })
+  const authClient = sanityClient(readToken, false)
 
   // The secret can't be stored in an env variable with a NEXT_PUBLIC_ prefix, as it would make you
   // vulnerable to leaking the token to anyone. If you don't have an custom API with authentication

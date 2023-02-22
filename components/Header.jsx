@@ -7,11 +7,6 @@ import OSLogoIcon from './OSLogoIcon'
 
 const features = [
   {
-    name: 'About',
-    href: '/about',
-    description: '',
-  },
-  {
     name: 'Volunteer',
     href: '/volunteer',
     description: '',
@@ -21,11 +16,16 @@ const features = [
     href: '/partner',
     description: '',
   },
+  {
+    name: 'About',
+    href: '/about',
+    description: '',
+  },
 ]
 
 export default function Header() {
   return (
-    <Popover className="relative bg-gray-100 text-black shadow dark:bg-gray-700 dark:text-gray-100">
+    <Popover className="relative z-20 bg-gray-100 text-black shadow dark:bg-gray-700 dark:text-gray-100">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-center justify-between py-2 md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
