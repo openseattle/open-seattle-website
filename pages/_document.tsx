@@ -4,6 +4,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <title>Digital Aid Seattle</title>
+        <meta
+          name="description"
+          content="Connecting Puget Sound non-profits with free tech solutions. Receive help or volunteer with us today!"
+          key="desc"
+        />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Oswald:wght@400;500&display=swap"
