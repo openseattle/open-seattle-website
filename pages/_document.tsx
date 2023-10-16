@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Digital Aid Seattle</title>
         <meta
           name="description"
           content="Connecting Puget Sound non-profits with free tech solutions. Receive help or volunteer with us today!"
