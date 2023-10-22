@@ -15,16 +15,19 @@ class DASVolunteerRoleService {
   private base: Airtable.Base
   private volunteerRolesTable: Airtable.Table<Airtable.FieldSet>
 
-  constructor(apiKey:string, baseId:string, tableId:string) {
+  constructor(apiKey: string, baseId: string, tableId: string) {
     this.airtable = new Airtable({
-    apiKey: apiKey || process.env.NEXT_PUBLIC_AIRTABLE_API_KEY,
-  });
-  this.base = this.airtable.base(baseId || process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID_DAS)
-  this. volunteerRolesTable = this.base( tableId ||
-    process.env.NEXT_PUBLIC_AIRTABLE_TABLE_VOLUNTEER_ROLES
-  )};
+      apiKey: apiKey || process.env.NEXT_PUBLIC_AIRTABLE_API_KEY,
+    })
+    this.base = this.airtable.base(
+      baseId || process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID_DAS
+    )
+    this.volunteerRolesTable = this.base(
+      tableId || process.env.NEXT_PUBLIC_AIRTABLE_TABLE_VOLUNTEER_ROLES
+    )
+  }
 
-  getRoleUrl(roleName:string) {
+  getRoleUrl(roleName: string) {
     return `/volunteer_role?role=${roleName.replace(/ /g, '-').toLowerCase()}`
   }
 
@@ -40,7 +43,7 @@ class DASVolunteerRoleService {
         (record) => record.get('Status') === 'Active'
       )
       const volunteerRolesData = activeRoles.map((record) => {
-      const roleUrl = this.getRoleUrl(String(record.fields.Role))
+        const roleUrl = this.getRoleUrl(String(record.fields.Role))
         return {
           id: record.id,
           role: String(record.fields.Role),
@@ -55,14 +58,13 @@ class DASVolunteerRoleService {
           },
         }
       })
-      console.log('volunteerRolesData', volunteerRolesData)
       return volunteerRolesData
     } catch (err) {
       console.log(err)
       throw err
     }
   }
-
+  // TODO: Need to improve parsing of param to include roles that have a '/' eg) QA/Test Engineer or UI/UX Designer
   async getVolunteerRoleByName(roleName): Promise<DASVolunteerRole | null> {
     try {
       const formattedRoleName = roleName.replace(/-/g, ' ')
@@ -103,6 +105,10 @@ const apiKey = process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
 const baseId = process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID_DAS
 const tableId = process.env.NEXT_PUBLIC_AIRTABLE_TABLE_VOLUNTEER_ROLES
 
-const dasVolunteerRoleService = new DASVolunteerRoleService(apiKey,baseId,tableId)
+const dasVolunteerRoleService = new DASVolunteerRoleService(
+  apiKey,
+  baseId,
+  tableId
+)
 
 export { dasVolunteerRoleService }
