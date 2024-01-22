@@ -1,11 +1,11 @@
 /*
 * @2023 Digital Aid Seattle
 */
-import { Box, Button, Container, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
+import Masthead from 'components/Masthead'
 import SectionContainer from 'components/layout/SectionContainer'
 import { withBasicLayout } from 'components/layouts'
-import ErrorImage from '../assets/404-error.png'
-import Masthead from 'components/Masthead'
+const ErrorImage = '/images/404-error.png'
 
 // Promote, if we want to handle other error types
 type ErrorComponentProps = {
@@ -84,7 +84,7 @@ function Page404() {
       >
         <ErrorComponent title="Page Not Found"
           description="Unfortunately, the page you are trying to access could not be located. Please return to our home page to continue your journey."
-          imageSrc={ErrorImage.src}
+          imageSrc={ErrorImage}
           imageTitle="404 Error Image" />
       </Box>
     </>

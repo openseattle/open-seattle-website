@@ -11,13 +11,13 @@ export default function Document() {
         <link
           rel="icon"
           sizes="any"
-          href="/logo-light-icon.svg"
+          href="/images/logo-light-icon.svg"
           type="image/svg+xml"
         />
         <link
           rel="icon"
           sizes="any"
-          href="/logo-light-icon-32x32.png"
+          href="/images/logo-light-icon-32x32.png"
           type="image/png"
         />
       </Head>

@@ -3,7 +3,7 @@
 */
 
 import { groq } from 'next-sanity';
-import { sanityClient } from '../../sanity/lib/client';
+import { sanityClient } from '../sanity/lib/client';
 import { OSEvent } from 'types';
 
 // Who knows, maybe we replace this with Airtable

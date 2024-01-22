@@ -7,7 +7,7 @@ import { AppProps } from 'next/app'
 import { theme } from 'theme/theme'
 import { useEffect, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { dasProjectsService } from 'pages/api/ProjectsService'
+import { dasProjectsService } from 'src/ProjectsService'
 
 const DEFAULT_TAG =
   'Free tech solutions for Puget Sound nonprofits | Digital Aid Seattle'

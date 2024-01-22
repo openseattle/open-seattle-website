@@ -22,24 +22,21 @@ class DASVolunteerRoleService {
 
     const { getStringFieldRecord } = airtableService
 
-    const activeRoles = await airtableService.getTableRecords(
+    return airtableService.getTableRecords(
       volunteerRolesTable,
       maxRecords,
       activeRoleFilter
-    ) as any[];
-
-    activeRoles.sort((a, b) => {
-      return a.fields.Role.localeCompare(b.fields.Role)
+    ).then(activeRoles => {
+      const casted = activeRoles as any[];
+      casted.sort((a, b) => a.fields.Role.localeCompare(b.fields.Role))
+      return casted.map((record) => {
+        return {
+          id: record.id,
+          role: getStringFieldRecord(record, 'Role'),
+          key: getStringFieldRecord(record, 'Key'),
+        }
+      })
     })
-
-    const volunteerRolesData = activeRoles.map((record) => {
-      return {
-        id: record.id,
-        role: getStringFieldRecord(record, 'Role'),
-        key: getStringFieldRecord(record, 'Key'),
-      }
-    })
-    return volunteerRolesData
   }
 
   async getRoleDetailsByName(

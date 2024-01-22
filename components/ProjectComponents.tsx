@@ -2,7 +2,6 @@
 /*
  * @2024 Digital Aid Seattle
  */
-import { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -12,6 +11,7 @@ import {
   useTheme,
 } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useEffect, useState } from 'react'
 // icons for role cards
 import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined'
 import AutoStoriesOutlinedIcon from '@mui/icons-material/AutoStoriesOutlined'
@@ -28,14 +28,15 @@ import ScreenSearchDesktopOutlinedIcon from '@mui/icons-material/ScreenSearchDes
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
 
 
-import { urlForImage } from '../sanity/lib/image'
-import StateBadge from './cards/StateBadge'
+import { dasProjectsService } from 'src/ProjectsService'
 import { DASProject, TeamMember } from 'types'
-import NoPhotoPerson from '../assets/no-photo-person.svg'
-import { dasProjectsService } from 'pages/api/ProjectsService'
-import SectionContainer from './layout/SectionContainer'
+import { urlForImage } from '../sanity/lib/image'
 import CardWithPhoto from './cards/CardWithPhoto'
+import StateBadge from './cards/StateBadge'
+import SectionContainer from './layout/SectionContainer'
 import ListItemWithIcon from './list/ListItemWithIcon'
+
+const NoPhotoPerson = '/images/no-photo-person.svg'
 
 const rolesMap = {
   communityEngagementLiason: {
@@ -338,7 +339,7 @@ const ProjectTeamSection = (props: { title: string, members?: TeamMember[] }) =>
           component="ul"
         >
           {members.map((person, idx) => {
-            const url = person.url ? person.url : person.image ? urlForImage(person.image).url() : NoPhotoPerson.src;
+            const url = person.url ? person.url : person.image ? urlForImage(person.image).url() : NoPhotoPerson;
             return <CardWithPhoto
               key={idx}
               title={person.name}
@@ -415,13 +416,6 @@ const ProjectContactUsSection = () => {
 }
 
 export {
-  ProjectTextSection,
-  ProjectSection,
-  ProjectBodyTextSection,
-  ProjectSubheader,
-  ProjectFooterSection,
-  ProjectHeaderSection,
-  ProjectTeamSection,
-  ProjectRolesSection,
-  ProjectContactUsSection
+  ProjectBodyTextSection, ProjectContactUsSection, ProjectFooterSection,
+  ProjectHeaderSection, ProjectRolesSection, ProjectSection, ProjectSubheader, ProjectTeamSection, ProjectTextSection
 }

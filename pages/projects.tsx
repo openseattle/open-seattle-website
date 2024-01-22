@@ -4,7 +4,7 @@ import CardGridContainer from 'components/cards/CardGridContainer'
 import CardProject from 'components/cards/CardProject'
 import { withBasicLayout } from 'components/layouts'
 import { useEffect, useState } from 'react'
-import { dasProjectsService } from './api/ProjectsService'
+import { dasProjectsService } from '../src/ProjectsService'
 
 const ProjectsPage = () => {
   const theme = useTheme()

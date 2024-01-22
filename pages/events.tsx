@@ -15,7 +15,7 @@ import { withBasicLayout } from 'components/layouts'
 import { useEffect, useState } from 'react'
 
 import SectionContainer from 'components/layout/SectionContainer'
-import { eventsService } from './api/EventsService'
+import { eventsService } from '../src/EventsService'
 
 type MastheadProps = {
   title: string

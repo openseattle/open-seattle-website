@@ -16,7 +16,7 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { theme } from 'theme/theme'
 
-import OSLogo from '../assets/darkThemeLogo.svg'
+const OSLogo = '/images/darkThemeLogo.svg'
 
 const SECTION_TO_PATH = {
   About: '/about',
@@ -79,7 +79,7 @@ const CommonHeader = () => {
           {/* LOGO */}
           <Link href="/">
             <img
-              src={OSLogo.src}
+              src={OSLogo}
               style={{
                 width: '120px',
               }}
@@ -147,7 +147,7 @@ const CommonHeader = () => {
           {/* LOGO */}
           <Link href="/">
             <img
-              src={OSLogo.src}
+              src={OSLogo}
               style={{
                 width: '120px',
               }}

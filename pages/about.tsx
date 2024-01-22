@@ -38,17 +38,18 @@ import ListItemWithIcon from 'components/list/ListItemWithIcon'
 import { designColor } from 'theme/theme'
 
 import MastheadWithImage from 'components/MastheadWithImage'
-import AboutUsImage from '../assets/aboutUs.png'
-import AppleLogo from '../assets/aboutUsIcons/apple.svg'
-import GeneticsIcon from '../assets/aboutUsIcons/genetics.svg'
-import GoogleLogo from '../assets/aboutUsIcons/google.svg'
-import HCIIcon from '../assets/aboutUsIcons/hci.svg'
-import MicrosoftLogo from '../assets/aboutUsIcons/microsoft.svg'
-import NOAALogo from '../assets/aboutUsIcons/noaa.svg'
-import NonProfitManagementIcon from '../assets/aboutUsIcons/non_profit_management.svg'
-import PhysicsIcon from '../assets/aboutUsIcons/physics.svg'
-import StarbucksLogo from '../assets/aboutUsIcons/starbucks.svg'
-import VerizonLogo from '../assets/aboutUsIcons/verizon.svg'
+
+const AboutUsImage = '/images/aboutUs.png'
+const AppleLogo = '/images/aboutUsIcons/apple.svg'
+const GeneticsIcon = '/images/aboutUsIcons/genetics.svg'
+const GoogleLogo = '/images/aboutUsIcons/google.svg'
+const HCIIcon = '/images/aboutUsIcons/hci.svg'
+const MicrosoftLogo = '/images/aboutUsIcons/microsoft.svg'
+const NOAALogo = '/images/aboutUsIcons/noaa.svg'
+const NonProfitManagementIcon = '/images/aboutUsIcons/non_profit_management.svg'
+const PhysicsIcon = '/images/aboutUsIcons/physics.svg'
+const StarbucksLogo = '/images/aboutUsIcons/starbucks.svg'
+const VerizonLogo = '/images/aboutUsIcons/verizon.svg'
 
 const AboutPage = () => {
   const theme = useTheme()
@@ -89,7 +90,7 @@ const AboutUsHeroSection = () => {
   const extraSmallScreen = useMediaQuery(theme.breakpoints.only('xs'))
   return (
     <MastheadWithImage
-      imageSrc={AboutUsImage.src}
+      imageSrc={AboutUsImage}
       imageText="About Us page graphic"
     >
       <>
@@ -265,27 +266,27 @@ const OurTeamSection = () => {
 const companiesList = [
   {
     label: 'Apple',
-    icon: <img src={AppleLogo.src} alt="Apple logo" width="40px" />,
+    icon: <img src={AppleLogo} alt="Apple logo" width="40px" />,
   },
   {
     label: 'Google',
-    icon: <img src={GoogleLogo.src} alt="Google logo" width="40px" />,
+    icon: <img src={GoogleLogo} alt="Google logo" width="40px" />,
   },
   {
     label: 'Verizon',
-    icon: <img src={VerizonLogo.src} alt="Verizon logo" width="40px" />,
+    icon: <img src={VerizonLogo} alt="Verizon logo" width="40px" />,
   },
   {
     label: 'Microsoft',
-    icon: <img src={MicrosoftLogo.src} alt="Microsoft logo" width="40px" />,
+    icon: <img src={MicrosoftLogo} alt="Microsoft logo" width="40px" />,
   },
   {
     label: 'Starbucks',
-    icon: <img src={StarbucksLogo.src} alt="Starbucks logo" width="40px" />,
+    icon: <img src={StarbucksLogo} alt="Starbucks logo" width="40px" />,
   },
   {
     label: 'NOAA',
-    icon: <img src={NOAALogo.src} alt="NOAA logo" width="40px" />,
+    icon: <img src={NOAALogo} alt="NOAA logo" width="40px" />,
   },
 ]
 
@@ -302,7 +303,7 @@ const experienceContent = [
   {
     label: 'Nonprofit Management',
     icon: (
-      <img src={NonProfitManagementIcon.src} alt="NOAA logo" width="24px" />
+      <img src={NonProfitManagementIcon} alt="NOAA logo" width="24px" />
     ),
   },
   { label: 'Operations Management', icon: <ManageAccountsOutlined /> },
@@ -320,7 +321,7 @@ const experienceContent = [
 const degreeContent = [
   {
     label: 'Informatics & Human Computer Interaction',
-    icon: <img src={HCIIcon.src} alt="" width="24px" />,
+    icon: <img src={HCIIcon} alt="" width="24px" />,
   },
   {
     label: 'Computer Science / Engineering',
@@ -331,11 +332,11 @@ const degreeContent = [
   { label: 'Architecture', icon: <Apartment /> },
   {
     label: 'Life Sciences',
-    icon: <img src={GeneticsIcon.src} alt="" width="24px" />,
+    icon: <img src={GeneticsIcon} alt="" width="24px" />,
   },
   { label: 'Law', icon: <Gavel /> },
   {
     label: 'Astrophysics',
-    icon: <img src={PhysicsIcon.src} alt="" width="24px" />,
+    icon: <img src={PhysicsIcon} alt="" width="24px" />,
   },
 ]

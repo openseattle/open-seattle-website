@@ -10,7 +10,6 @@ import {
   useTheme
 } from '@mui/material'
 import SectionContainer from 'components/layout/SectionContainer'
-import { dasProjectsService } from './api/ProjectsService'
 
 import { withBasicLayout } from 'components/layouts'
 // icons for role cards
@@ -23,7 +22,8 @@ import {
 } from 'components/ProjectComponents'
 import RolesSection from 'components/RolesSection'
 import { DASProject, DASVolunteerRoleBasicInfo, TeamMember } from 'types'
-import { dasVolunteerRoleService } from './api/VolunteerRoleService'
+import { dasVolunteerRoleService } from 'src/VolunteerRoleService'
+import { dasProjectsService } from 'src/ProjectsService'
 
 const TheCadrePage = () => {
   const [project, setProject] = useState<DASProject>()

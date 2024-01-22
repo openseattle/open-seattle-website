@@ -38,13 +38,11 @@ import { withBasicLayout } from 'components/layouts'
 import { Section, Subheader } from 'components/style-utils'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { dasVolunteerRoleService } from 'src/VolunteerRoleService'
 import { designColor } from 'theme/theme'
 import { DASVolunteerRoleBasicInfo } from 'types'
 
-import VolunteerImage from '../assets/volunteerWithUs.png'
-import { dasVolunteerRoleService } from './api/VolunteerRoleService'
-
-
+const VolunteerImage = '/images/volunteerWithUs.png'
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -143,23 +141,18 @@ const processContent = [
 ]
 
 const VolunteerPage = () => {
-  const [volunteerRoles, setVolunteerRoles] = useState<
-    DASVolunteerRoleBasicInfo[]
-  >([])
+  const [volunteerRoles, setVolunteerRoles] = useState<DASVolunteerRoleBasicInfo[]>([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const roles: DASVolunteerRoleBasicInfo[] =
-        await (dasVolunteerRoleService.getAllActiveRoles())
-      setVolunteerRoles(roles)
-    }
-
-    fetchData()
+    dasVolunteerRoleService.getAllActiveRoles()
+      .then(roles => setVolunteerRoles(roles))
+      .catch(err => console.error(err));
   }, [])
 
   const theme = useTheme()
   const palette = theme.palette
-  const isSmallScreen = useMediaQuery('(max-width:600px)')
+  const isSmallScreen = useMediaQuery(theme.breakpoints.only('xs'))
+
   const [oathValuesExpanded, setOathValuesExpanded] = React.useState<
     string | false
   >(false)
@@ -342,7 +335,7 @@ const VolunteerPage = () => {
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <MastheadWithImage
-        imageSrc={VolunteerImage.src}
+        imageSrc={VolunteerImage}
         imageText="Volunteer graphic"
       >
         <>

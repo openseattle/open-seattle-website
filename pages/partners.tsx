@@ -22,8 +22,9 @@ import CardLeft from 'components/cards/CardLeft'
 import SectionContainer from 'components/layout/SectionContainer'
 import { withBasicLayout } from 'components/layouts'
 import { designColor } from 'theme/theme'
-import PartnerImage from '../assets/partnerWithUs.png'
 import MastheadWithImage from 'components/MastheadWithImage'
+
+const PartnerImage = '/images/partnerWithUs.png'
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -94,7 +95,7 @@ const PartnersPage = () => {
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <MastheadWithImage
-        imageSrc={PartnerImage.src}
+        imageSrc={PartnerImage}
         imageText="Partner graphic"
       >
         <>

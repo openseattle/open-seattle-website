@@ -5,10 +5,10 @@ import CardMedia from '@mui/material/CardMedia'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 
-import { dasProjectsService } from 'pages/api/ProjectsService'
 import { DASProject } from 'types'
 import { urlForImage } from '../../sanity/lib/image'
 import StateBadge from './StateBadge'
+import { dasProjectsService } from 'src/ProjectsService'
 
 type CardProjectProps = {
   project: DASProject

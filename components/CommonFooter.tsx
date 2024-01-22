@@ -7,8 +7,9 @@ import { Box, Container, Grid, styled, Typography } from '@mui/material'
 import Link from '@mui/material/Link'
 import { theme } from 'theme/theme'
 
-import OSLogo from '../assets/darkThemeLogo.svg'
 import { ReactNode } from 'react'
+
+const OSLogo = '/images/darkThemeLogo.svg'
 
 // const GridItem = styled(Grid)(() => {
 //   return {
@@ -82,7 +83,7 @@ const logoBox = (imageStyle) => {
     <Box>
       <Link href="/" title="Go back to home" aria-label="Go back to home">
         <img
-          src={OSLogo.src}
+          src={OSLogo}
           style={imageStyle}
           alt="Digital Aid Seattle Logo"
         />
