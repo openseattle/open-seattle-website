@@ -8,17 +8,10 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 
-import { useEffect, useState } from 'react'
 import { OSEvent } from 'types'
 
 const CardReservation = (props: { event: OSEvent }) => {
-  const [event, setEvent] = useState<OSEvent>()
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
-
-  return (event &&
+  return (
     <Card
       sx={{
         boxShadow:
@@ -42,10 +35,9 @@ const CardReservation = (props: { event: OSEvent }) => {
           <Typography variant="labelLarge" textAlign="center">
             Free to attend
           </Typography>
-          <Link href={event.rsvpLink} target="_blank" passHref>
+          <Link href={props.event.rsvpLink} target="_blank" passHref>
             <Button
               variant="contained"
-              href={event.rsvpLink}
               sx={{ width: { md: 'max-content' } }}>
               RSVP
             </Button>

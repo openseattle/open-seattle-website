@@ -15,13 +15,9 @@ type OSEvent = {
   image: Image,
   rsvpLink: string,
   active: boolean,
-  details: boolean,
   partner: string,
   id: string,
-  about: {
-    title: string,
-    details: string[]
-  }[],
+  about: string,
   activity: Image
 }
 

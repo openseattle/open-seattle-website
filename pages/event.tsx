@@ -32,15 +32,20 @@ import { OSEvent } from 'types';
 import { eventsService } from './api/EventsService';
 /*********/
 
+const Labels = {
+  contact: 'Interested in this event?',
+  rsvp: 'RSVP',
+  about: 'About this event',
+  dateAndTime: 'Date and time',
+  location: 'Location',
+  homeCrumb: 'Home',
+  eventsCrumb: 'Events'
+}
+
 const HeaderSection = (props: { event: OSEvent }) => {
   const theme = useTheme()
-  const [event, setEvent] = useState<OSEvent>()
   const largeScreen = useMediaQuery(theme.breakpoints.up('lg'))
   const extraSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
 
   const BreadCrumbSection = (props: { event: OSEvent }) => {
     return (
@@ -49,10 +54,10 @@ const HeaderSection = (props: { event: OSEvent }) => {
         separator={<NavigateNextSharp fontSize="small" color={'primary'} />}
       >
         <Link href={'./'} >
-          <Typography color="textPrimary">Home</Typography>
+          <Typography color="textPrimary">{Labels.homeCrumb}</Typography>
         </Link>
         <Link href={'./events'}>
-          <Typography color="textPrimary">Events</Typography>
+          <Typography color="textPrimary">{Labels.eventsCrumb}</Typography>
         </Link>
         <Typography color="textPrimary">{props.event.title}</Typography>
       </Breadcrumbs>
@@ -86,23 +91,24 @@ const HeaderSection = (props: { event: OSEvent }) => {
               Event
             </Typography>
             <Typography variant="displayMedium" component="h1">
-              {event.title}
+              {props.event.title}
             </Typography>
             <Typography variant="headlineMedium" component="h2">
-              {event.date}
+              {props.event.date}
             </Typography>
           </Stack>
 
-          <img
-            src={urlForImage(event.image).url()}
+          {props.event.image && props.event.image.asset && <img
+            src={urlForImage(props.event.image).url()}
             style={{
               width: '100%',
               aspectRatio: '1 / 1',
               display: 'block'
             }}
           />
+          }
           <Stack spacing="1rem">
-            <BreadCrumbSection event={event} />
+            <BreadCrumbSection event={props.event} />
           </Stack>
         </Stack>
       </Box>
@@ -140,32 +146,33 @@ const HeaderSection = (props: { event: OSEvent }) => {
                   width: { md: '40vw', lg: '25rem' },
                 }}
                 component="h1" >
-                {event.title}
+                {props.event.title}
               </Typography>
               <Typography
                 variant={largeScreen ? 'headlineLarge' : 'headlineMedium'}
                 component="h2" >
-                {event.date}
+                {props.event.date}
               </Typography>
             </Stack>
 
-            <Box
-              sx={{
-                width: { md: 'min(40vw, 18rem)', lg: '25rem' },
-                position: 'absolute',
-                right: { xs: '1rem', md: '2rem', lg: '0' },
-                bottom: '-6rem',
-                zIndex: '2',
-              }}
-            >
-              <img
-                src={urlForImage(event.image).url()}
-                style={{
-                  width: '100%',
-                  display: 'block'
+            {props.event.image && props.event.image.asset &&
+              <Box
+                sx={{
+                  width: { md: 'min(40vw, 18rem)', lg: '25rem' },
+                  position: 'absolute',
+                  right: { xs: '1rem', md: '2rem', lg: '0' },
+                  bottom: '-6rem',
+                  zIndex: '2',
                 }}
-              />
-            </Box>
+              >
+                <img
+                  src={urlForImage(props.event.image).url()}
+                  style={{
+                    width: '100%',
+                    display: 'block'
+                  }} />
+              </Box>
+            }
           </Box>
         </Box>
 
@@ -185,7 +192,7 @@ const HeaderSection = (props: { event: OSEvent }) => {
               paddingLeft: { md: '2rem', lg: '0' },
             }}
           >
-            <BreadCrumbSection event={event} />
+            <BreadCrumbSection event={props.event} />
           </Stack>
         </Box>
       </>
@@ -195,18 +202,11 @@ const HeaderSection = (props: { event: OSEvent }) => {
   return event ? (extraSmallScreen ? <MobileSection /> : <DesktopSection />) : <></>
 }
 
-const InfoSection = (props: {
-  event: OSEvent
-}) => {
+const InfoSection = (props: { event: OSEvent }) => {
   const theme = useTheme()
 
   const extraSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-  const [event, setEvent] = useState<OSEvent>()
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
   const renderItem = (title: string,
     icon: ReactNode,
     description: string[]) => {
@@ -214,7 +214,7 @@ const InfoSection = (props: {
       <Typography variant="headlineMedium">
         {title}
       </Typography>
-      <Box mt="2rem">
+      <Box mt="1rem">
         <ListItem
           sx={{
             borderColor: theme.palette.background.default,
@@ -236,103 +236,78 @@ const InfoSection = (props: {
   }
 
   function MobileSection() {
-    return (event &&
-      <Stack>
-        <CardReservation event={event} />
-        <Box marginTop={"2rem"}>
-          {renderItem(
-            "Date and time",
-            <EventAvailableOutlinedIcon />,
-            [event.date, eventsService.getTimeString(event)]
-          )}
-        </Box>
-        <Box>
-          {renderItem(
-            "Location",
-            <LocationOnIcon />,
-            [event.location]
-          )}
-        </Box>
-      </Stack>
-    )
+    return (<Stack>
+      {props.event.rsvpLink &&
+        <CardReservation event={props.event} />
+      }
+      <Box marginTop={"1rem"}>
+        {renderItem(
+          Labels.dateAndTime,
+          <EventAvailableOutlinedIcon />,
+          [props.event.date, eventsService.getTimeString(props.event)]
+        )}
+      </Box>
+      <Box>
+        {renderItem(
+          Labels.location,
+          <LocationOnIcon />,
+          [props.event.location]
+        )}
+      </Box>
+    </Stack>)
   }
 
   function DesktopSection() {
 
-    return (event &&
-      <>
-        <Box
-          sx={{
-            display: 'grid',
-            gridAutoFlow: 'columns',
-            gridTemplateColumns: { xs: 'repeat(1), minmax(15rem, 1fr)', md: `repeat(2, minmax(15rem, 1fr))`, lg: 'repeat(2, minmax(15rem, 1fr))' },
-            justifyContent: 'center',
-            gap: { xs: '1rem', md: '2rem' },
-            width: '100%',
-          }}
-        >
-          <Stack>
-            <Box>
-              {renderItem(
-                "Date and time",
-                <EventAvailableOutlinedIcon />,
-                [event.date, eventsService.getTimeString(event)]
-              )}
-            </Box>
-            <Box marginTop={"4rem"}>
-              {renderItem(
-                "Location",
-                <LocationOnIcon />,
-                [event.location]
-              )}
-            </Box>
-          </Stack>
+    return (
+      <Box
+        sx={{
+          display: 'grid',
+          gridAutoFlow: 'columns',
+          gridTemplateColumns: { xs: 'repeat(1), minmax(15rem, 1fr)', md: `repeat(2, minmax(15rem, 1fr))`, lg: 'repeat(2, minmax(15rem, 1fr))' },
+          justifyContent: 'center',
+          gap: { xs: '1rem', md: '2rem' },
+          width: '100%',
+        }}
+      >
+        <Stack>
+          <Box>
+            {renderItem(
+              Labels.dateAndTime,
+              <EventAvailableOutlinedIcon />,
+              [props.event.date, eventsService.getTimeString(props.event)]
+            )}
+          </Box>
+          <Box >
+            {renderItem(
+              Labels.location,
+              <LocationOnIcon />,
+              [props.event.location]
+            )}
+          </Box>
+        </Stack>
+        {props.event.rsvpLink &&
           <Stack sx={{ alignItems: "flex-end" }}>
-            <Box
-              sx={{
-                width: { md: '40vw', lg: '25rem' }
-              }}>
-              <CardReservation event={event} />
+            <Box sx={{ width: { md: '40vw', lg: '25rem' } }}>
+              <CardReservation event={props.event} />
             </Box>
           </Stack>
-        </Box>
-      </>
+        }
+      </Box>
     )
   }
 
-  return event ? extraSmallScreen ? <MobileSection /> : <DesktopSection /> : <></>
+  return extraSmallScreen ? <MobileSection /> : <DesktopSection />
 }
 
 const AboutSection = (props: { event: OSEvent }) => {
 
-  const [event, setEvent] = useState<OSEvent>()
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
-
-  return (event &&
+  return (props.event && props.event.about &&
     <Stack>
       <Typography variant="headlineLarge" component="h1">
-        About this event
+        {Labels.about}
       </Typography>
-      <Stack>
-        {event && event.about
-          && event.about.map((a, idx) =>
-            <Stack key={idx}>
-              {a.title &&
-                <Typography variant="labelLarge" marginTop={'2rem'}>
-                  {a.title}
-                </Typography>
-              }
-              {a.details && a.details.map((det, ddx) =>
-                <Box className="markdown" key={ddx} marginTop={'2rem'}>
-                  <Markdown>{det}</Markdown>
-                </Box>
-              )}
-            </Stack>
-          )}
-      </Stack>
+      <Markdown className='markdown'>{props.event.about}</Markdown>
     </Stack>
   )
 }
@@ -340,43 +315,29 @@ const AboutSection = (props: { event: OSEvent }) => {
 const ContactUsSection = (props: { event: OSEvent }) => {
   const theme = useTheme()
 
-  const [event, setEvent] = useState<OSEvent>()
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
-
-  return (event && event.rsvpLink &&
+  return (props.event.rsvpLink &&
     <SectionContainer backgroundColor={theme.palette.background.paper}>
       <Section>
         <Subheader variant="headlineMedium">
-          Interested in this event?
+          {Labels.contact}
         </Subheader>
-        <Link href={event.rsvpLink} target="_blank"
+        <Link href={props.event.rsvpLink} target="_blank"
           passHref>
-          <Button variant="contained">RSVP</Button>
+          <Button variant="contained">{Labels.rsvp}</Button>
         </Link>
       </Section>
     </SectionContainer>)
 }
-
-
 
 const ActivitySection = (props: { event: OSEvent }) => {
   const theme = useTheme()
   const extraSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
   const width = extraSmallScreen ? "100%" : "50%"
 
-  const [event, setEvent] = useState<OSEvent>()
-
-  useEffect(() => {
-    setEvent(props.event)
-  }, [props])
-
-  return (event && event.activity && event.activity.asset &&
+  return (props.event.activity && props.event.activity.asset &&
     <Section  >
       <img
-        src={urlForImage(event.activity).url()}
+        src={urlForImage(props.event.activity).url()}
         style={{
           width: width,
           // TODO A drop shadow would be nice, but centering needs work
@@ -387,7 +348,6 @@ const ActivitySection = (props: { event: OSEvent }) => {
       />
     </Section>)
 }
-
 
 const EventPage = () => {
   const theme = useTheme()
@@ -411,18 +371,22 @@ const EventPage = () => {
   return (
     <>
       <BlockComponent block={!event}>
-        <HeaderSection event={event} />
-        <SectionContainer backgroundColor={theme.palette.background.default}>
-          <Stack
-            gap={{ xs: '64px', lg: '80px' }}
-            maxWidth="880px"
-            margin="0 auto" >
-            <InfoSection event={event} />
-            <AboutSection event={event} />
-            <ActivitySection event={event} />
-          </Stack>
-        </SectionContainer>
-        <ContactUsSection event={event} />
+        {event &&
+          <>
+            <HeaderSection event={event} />
+            <SectionContainer backgroundColor={theme.palette.background.default}>
+              <Stack
+                gap={{ xs: '1rem', lg: '2rem' }}
+                maxWidth="880px"
+                margin="0 auto" >
+                <InfoSection event={event} />
+                <AboutSection event={event} />
+                <ActivitySection event={event} />
+              </Stack>
+            </SectionContainer>
+            {event.rsvpLink && <ContactUsSection event={event} />}
+          </>
+        }
       </BlockComponent>
     </>
   )

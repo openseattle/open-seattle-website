@@ -66,11 +66,6 @@ export default {
             title: 'Partner'
         },
         {
-            name: 'details',
-            type: 'boolean',
-            title: 'Details'
-        },
-        {
             name: 'id',
             type: 'string',
             title: 'ID'
@@ -78,16 +73,7 @@ export default {
         {
             title: 'About',
             name: 'about',
-            type: 'array',
-            of: [
-                {
-                    type: 'object',
-                    fields: [
-                        { name: 'title', type: 'string', title: 'Title' },
-                        { name: 'details', type: 'array', title: 'Details', of: [{ type: 'text' }] }
-                    ]
-                }
-            ]
+            type: 'text'
         },
         {
             name: 'activity',
