@@ -1,10 +1,11 @@
 import { Box, Stack, useTheme } from '@mui/material'
-import Masthead from 'components/Masthead'
 import CardGridContainer from 'components/cards/CardGridContainer'
 import CardProject from 'components/cards/CardProject'
 import { BlockComponent, LoadingContext, withBasicLayout } from 'components/layouts'
+import Masthead from 'components/Masthead'
 import { useContext, useEffect, useState } from 'react'
 import { DASProject } from 'types'
+
 import { dasProjectsService } from './api/ProjectsService'
 
 const ProjectsPage = () => {
@@ -20,7 +21,8 @@ const ProjectsPage = () => {
     dasProjectsService.getAll()
       .then(projs => setProjects(projs
         .filter(proj => proj.display || proj.display === undefined)
-        .sort((p1, p2) => p1.orderRank.localeCompare(p2.orderRank))))
+        // .sort((p1, p2) => p1.orderRank.localeCompare(p2.orderRank))
+      ))
       .catch(error => console.log(error))
       .finally(() => {
         setInit(true)

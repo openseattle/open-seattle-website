@@ -1,14 +1,14 @@
+import { CardActionArea, styled } from '@mui/material'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-
 import { dasProjectsService } from 'pages/api/ProjectsService'
 import { DASProject } from 'types'
+
 import { urlForImage } from '../../sanity/lib/image'
 import StateBadge from './StateBadge'
-import { CardActionArea, styled } from '@mui/material'
 
 type CardProjectProps = {
   project: DASProject
@@ -44,7 +44,7 @@ const CardProject = ({ project }: CardProjectProps) => {
           <Stack direction={{ xs: 'row', lg: 'column' }} gap="1.5rem">
             <CardMedia
               component="img"
-              image={urlForImage(project.image).url()}
+              image={project.imageSrc ? project.imageSrc : urlForImage(project.image).url()}
               sx={{
                 width: { md: '7rem', lg: '100%' },
                 aspectRatio: '1 / 1',
@@ -63,21 +63,22 @@ const CardProject = ({ project }: CardProjectProps) => {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Typography variant="labelLarge">
-                    {project.partner}
-                  </Typography>
+                  {project.programAreas &&
+                    <Stack direction="row" justifyContent="space-between">
+                      <Typography variant="labelLarge">
+                        {project.partner}
+                      </Typography>
+                    </Stack>
+                  }
                   <StateBadge state={project.status} />
                 </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="labelMedium">
-                    {(project.programAreas ? project.programAreas : []).join(
-                      ', '
-                    )}
-                  </Typography>
-                  <Typography variant="labelMedium">
-                    {dasProjectsService.getTimeline(project)}
-                  </Typography>
-                </Stack>
+                {project.programAreas &&
+                  <Stack direction="row" justifyContent="space-between">
+                    <Typography variant="labelMedium">
+                      {project.programAreas.join(', ')}
+                    </Typography>
+                  </Stack>
+                }
               </Stack>
             </Stack>
           </Stack>

@@ -19,6 +19,14 @@ class AirtableService {
     this.base = this.airtable.base(baseId)
   }
 
+  async getRecord(
+    tableId: string,
+    recordId: string
+  ) {
+    return this.base(tableId).find(recordId);
+  }
+
+
   async getTableRecords(
     tableId: string,
     maxRecords?: number,

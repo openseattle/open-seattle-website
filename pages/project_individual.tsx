@@ -1,81 +1,37 @@
 /*
  * @2023 Digital Aid Seattle
  */
-import { useContext, useEffect, useState } from 'react'
-
 import {
   Box,
   Button,
   Stack,
-  Typography,
   useTheme
 } from '@mui/material'
 import SectionContainer from 'components/layout/SectionContainer'
-
 import { BlockComponent, LoadingContext, withBasicLayout } from 'components/layouts'
-
-import { ProjectFooterSection, ProjectHeaderSection } from 'components/ProjectComponents'
+import { ProjectFooterSection, ProjectHeaderSection, ProjectTeamSection } from 'components/ProjectComponents'
 import RolesSection from 'components/RolesSection'
-import CardWithPhoto from 'components/cards/CardWithPhoto'
-import { Section, Subheader, TextSection } from 'components/style-utils'
-import { DASProject, TeamMember } from 'types'
-import { urlForImage } from '../sanity/lib/image'
+import { Section, Subheader } from 'components/style-utils'
+import { useContext, useEffect, useState } from 'react'
+import Markdown from 'react-markdown'
+import { DASProject } from 'types'
+
 import { dasProjectsService } from './api/ProjectsService'
 
 type BodyTextSectionProps = {
   title: string
-  texts?: string[]
+  text: string
 }
 
-const BodyTextSection = ({ title, texts }: BodyTextSectionProps) => {
-  return (
-    texts &&
-    texts.length > 0 && (
-      <Section>
-        <Subheader variant="headlineMedium">{title}</Subheader>
-        <TextSection>
-          {texts.map((t, index) => (
-            <Typography key={index} variant="bodyLarge">
-              {t}
-            </Typography>
-          ))}
-        </TextSection>
-      </Section>
-    )
-  )
-}
-
-type TeamSectionProps = {
-  title: string
-  members?: TeamMember[]
-}
-
-const TeamSection = ({ title, members }: TeamSectionProps) => {
-  return (members && members.length > 0) &&
+const BodyTextSection = ({ title, text }: BodyTextSectionProps) => {
+  return (text &&
     <Section>
-      <Subheader variant="headlineMedium">
-        {title}
-      </Subheader>
-      <Box
-        sx={{
-          display: 'grid',
-          gridAutoFlow: 'columns',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(12.25rem, 1fr))',
-          justifyContent: 'center',
-          gap: '2rem',
-          width: '100%',
-        }}
-      >
-        {members.map((person) => (
-          <CardWithPhoto
-            key={person._id}
-            title={person.name}
-            description={person.role}
-            image={person.image ? urlForImage(person.image).url() : undefined}
-          />
-        ))}
-      </Box>
+      <Subheader variant="headlineMedium">{title}</Subheader>
+      <Markdown className='markdown'>
+        {text}
+      </Markdown>
     </Section>
+  )
 }
 
 const ProjectIndividualPage = () => {
@@ -85,13 +41,19 @@ const ProjectIndividualPage = () => {
   useEffect(() => {
     setLoading(true);
     const params = new URLSearchParams(window.location.search)
-    dasProjectsService
-      .getOne(params.get('project'))
-      .then((data) => {
+    dasProjectsService.getOne(params.get('project'))
+      .then((resps) => {
+        const project = resps
         // should reroute if no data
-        setProject(data)
+        dasProjectsService.getSquad(project.ventureCode)
+          .then(team => {
+            project.currentTeam = team;
+            setProject(project)
+          })
+          .catch((error) => console.error(error))
+          .finally(() => setLoading(false))
       })
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
       .finally(() => setLoading(false))
   }, [setLoading])
 
@@ -104,13 +66,10 @@ const ProjectIndividualPage = () => {
           maxWidth="880px"
           margin="0 auto"
         >
-          <BodyTextSection title="Problem" texts={project.problem} />
-          <BodyTextSection title="Solution" texts={project.solution} />
-          <BodyTextSection title="Impact" texts={project.impact} />
-          <TeamSection title="Current team" members={project.currentTeam} />
-          {project.rolesNeeded && project.rolesNeeded.length > 0 && (
-            <RolesSection title="Roles needed" roles={project.rolesNeeded} />
-          )}
+          <BodyTextSection title="Problem" text={project.problem} />
+          <BodyTextSection title="Solution" text={project.solution} />
+          <BodyTextSection title="Impact" text={project.impact} />
+          <ProjectTeamSection title="Current team" members={project.currentTeam} />
           <Section>
             <Subheader variant="headlineMedium">
               Questions about this project?
@@ -145,9 +104,14 @@ const ProjectIndividualPage = () => {
 
   return (
     <BlockComponent block={!project}>
-      <ProjectHeaderSection project={project} />
-      {project && getBody()}
-      <ProjectFooterSection />
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.default
+        }}>
+        <ProjectHeaderSection project={project} />
+        {project && getBody()}
+        <ProjectFooterSection />
+      </Box>
     </ BlockComponent>
   )
 }

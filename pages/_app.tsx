@@ -1,13 +1,14 @@
 import 'styles/global.css'
 import 'styles/preflight.css'
-import Head from 'next/head'
 
 import { ThemeProvider } from '@mui/material'
 import { AppProps } from 'next/app'
-import { theme } from 'theme/theme'
-import { useEffect, useState } from 'react'
+import Head from 'next/head'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { dasProjectsService } from 'pages/api/ProjectsService'
+import { useEffect, useState } from 'react'
+import { theme } from 'theme/theme'
+
 import { dasVolunteerRoleService } from './api/VolunteerRoleService'
 
 const DEFAULT_TAG =
@@ -37,8 +38,8 @@ export default function App({ Component, pageProps }: AppProps) {
       }
       switch (pageName) {
         case 'project_individual':
-          const project = searchParams.get('project')
-          const p = await dasProjectsService.getOne(project)
+          const id = searchParams.get('project')
+          const p = id ? await dasProjectsService.getOne(id) : null;
           return p ? p.title.concat(' | Digital Aid Seattle') : DEFAULT_TAG
         case 'volunteer_role':
           const role = searchParams.get('role')

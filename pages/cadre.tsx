@@ -4,11 +4,12 @@
 import { useContext, useEffect, useState } from 'react'
 
 import {
+  Box,
   Stack,
   useTheme
 } from '@mui/material'
 import SectionContainer from 'components/layout/SectionContainer'
-import { dasProjectsService } from './api/ProjectsService'
+import { dasProjectsService, sanityProjectsService } from './api/ProjectsService'
 
 import { BlockComponent, LoadingContext, withBasicLayout } from 'components/layouts'
 // icons for role cards
@@ -34,7 +35,7 @@ const TheCadrePage = () => {
     setLoading(true);
     Promise.all([
       dasVolunteerRoleService.getAllActiveRoles(),
-      dasProjectsService.getOne('the-cadre'),
+      sanityProjectsService.getOne('the-cadre'),
       dasProjectsService.getPeople('ongoing')
     ])
       .then(resps => {
@@ -56,9 +57,9 @@ const TheCadrePage = () => {
           maxWidth="880px"
           margin="0 auto"
         >
-          <ProjectBodyTextSection title="Problem" texts={project.problem} />
-          <ProjectBodyTextSection title="Solution" texts={project.solution} />
-          <ProjectBodyTextSection title="Impact" texts={project.impact} />
+          <ProjectBodyTextSection title="Problem" texts={project.problem as unknown as string[]} />
+          <ProjectBodyTextSection title="Solution" texts={project.solution as unknown as string[]} />
+          <ProjectBodyTextSection title="Impact" texts={project.impact as unknown as string[]} />
           <ProjectTeamSection title="Current team" members={members} />
           <RolesSection title="Roles needed" roles={volunteerRoles} />
           <ProjectContactUsSection />
@@ -69,9 +70,14 @@ const TheCadrePage = () => {
 
   return (
     <BlockComponent block={!project}>
-      <ProjectHeaderSection project={project} />
-      {project ? getBody() : <></>}
-      <ProjectFooterSection />
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.default
+        }}>
+        <ProjectHeaderSection project={project} hideStatus={true} />
+        {project ? getBody() : <></>}
+        <ProjectFooterSection />
+      </Box>
     </ BlockComponent>
   )
 }

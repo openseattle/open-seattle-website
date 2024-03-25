@@ -47,12 +47,14 @@ type DASProject = {
   projectLink: string
   duration?: { start: string; end: string }
   image: Image
-  problem: string[]
-  solution: string[]
-  impact: string[]
+  problem: string
+  solution: string
+  impact: string
   rolesNeeded: DASVolunteerRoleBasicInfo[]
   currentTeam: TeamMember[]
-  display: boolean
+  display: boolean,
+  imageSrc: string,
+  ventureCode: string
 }
 
 type DASFeature = {
