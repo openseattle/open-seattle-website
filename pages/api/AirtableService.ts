@@ -57,6 +57,17 @@ class AirtableService {
     }
   }
 
+  getDateFieldRecord(
+    record: Airtable.Record<FieldSet>,
+    field: string
+  ): Date {
+    if (record.get(field) === undefined) {
+      return null
+    } else {
+      return new Date(record.get(field) as string)
+    }
+  }
+
   getStringFieldRecord(
     record: Airtable.Record<FieldSet>,
     field: string
